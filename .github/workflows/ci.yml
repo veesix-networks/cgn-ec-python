@@ -1,0 +1,26 @@
+name: CI Production
+on:
+  release:
+    types: [created]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - uses: jpetrucciani/ruff-check@main
+        with:
+          path: 'cgn_ec/'
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: "1.8.2"
+      - name: Build Poetry
+        run: poetry build
+      - name: Publish Package
+        run: poetry publish -u __token__ -p ${{ secrets.PYPI_API_TOKEN }}
