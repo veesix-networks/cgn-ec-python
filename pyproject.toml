@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "cgn-ec"
 version = "0.2.0"
-description = "Python Client library to interact with cgn-ec-pro API"
+description = "Python Client library to interact with cgn-ec API"
 authors = ["CGN Support <cgn-support@veesix-networks.co.uk>"]
 readme = "README.md"
 
