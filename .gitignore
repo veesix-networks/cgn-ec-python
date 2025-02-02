@@ -1,3 +1,6 @@
+# Local debugging
+debug_tests/
+
 # Ruff
 .ruff_cache
 

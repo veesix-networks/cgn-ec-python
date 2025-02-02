@@ -5,6 +5,44 @@ on:
     types: [created]
 
 jobs:
+  lint:
+    name: Lint and Check Format
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install the code linting and formatting tool Ruff
+      run: pipx install ruff
+    - name: Lint code with Ruff
+      run: ruff check --output-format=github --target-version=py39
+    - name: Check code formatting with Ruff
+      run: ruff format --diff --target-version=py39
+
+  #test:
+  #  name: Run tests
+  #  runs-on: ubuntu-latest
+  #
+  #  steps:
+  #  - uses: actions/checkout@v4
+  #    with:
+  #      persist-credentials: false
+  #  - name: Set up Python
+  #    uses: actions/setup-python@v5
+  #    with:
+  #      python-version: "3.12"
+  #  - name: Ruff Check
+  #    uses: jpetrucciani/ruff-check@main
+  #    with:
+  #      path: 'cgn_ec/'
+  #  - name: Test with pytest
+  #    run: |
+  #      pip install pytest pytest-cov
+  #      pytest tests/ --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-
+          
   build:
     name: Build distribution 📦
     runs-on: ubuntu-latest
@@ -40,9 +78,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/cgn-ec  # Replace <package-name> with your PyPI project name
+      url: https://pypi.org/p/cgn-ec
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
 
     steps:
     - name: Download all the dists
@@ -65,7 +103,7 @@ jobs:
       url: https://test.pypi.org/p/cgn-ec
 
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
 
     steps:
     - name: Download all the dists
